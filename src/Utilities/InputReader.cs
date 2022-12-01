@@ -13,6 +13,11 @@ public class InputReader
 
 	public Task<string[]> ReadLinesAsync(DateTime date)
 	{
+		if (date.Year != 2022 || date.Month != 12)
+		{
+			throw new ArgumentException("Date needs to be in December 2022", nameof(date));
+		}
+		
 		var expectedFileName = $"{date.Day:00}.txt";
 		var path = Path.Join(_inputDirectory, expectedFileName);
 

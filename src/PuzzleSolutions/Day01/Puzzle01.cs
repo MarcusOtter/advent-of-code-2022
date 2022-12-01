@@ -83,6 +83,12 @@ public class Puzzle01 : IPuzzleSolver
 			currentElfTotalCalories += calories;
 		}
 
-		return ValueTask.FromResult(elvesCalories.OrderByDescending(x => x).Take(3).Sum().ToString());
+		var result = elvesCalories
+			.OrderByDescending(x => x)
+			.Take(3)
+			.Sum()
+			.ToString();
+		
+		return ValueTask.FromResult(result);
 	}
 }

@@ -83,7 +83,10 @@ public class Puzzle01 : IPuzzleSolver
 		{
 			if (line == string.Empty)
 			{
-				if (currentElfTotalCalories > topCalories) topCalories = currentElfTotalCalories;
+				if (currentElfTotalCalories > topCalories)
+				{
+					topCalories = currentElfTotalCalories;
+				}
 
 				currentElfTotalCalories = 0;
 				continue;

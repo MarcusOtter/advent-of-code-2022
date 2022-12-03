@@ -4,23 +4,19 @@ public class Puzzle01 : IPuzzleSolver
 {
 	public int Day => 1;
 	
-	public ValueTask<string> SolveFirstHalfAsync(IEnumerable<string> input)
+	public string SolveFirstPart(string[] input)
 	{
-		var result = GetElfCalories(input)
+		return GetElfCalories(input)
 			.First()
 			.ToString();
-		
-		return ValueTask.FromResult(result);
 	}
 
-	public ValueTask<string> SolveSecondHalfAsync(IEnumerable<string> input)
+	public string SolveSecondPart(string[] input)
 	{
-		var result = GetElfCalories(input)
+		return GetElfCalories(input)
 			.Take(3)
 			.Sum()
 			.ToString();
-
-		return ValueTask.FromResult(result);
 	}
 
 	// Descending order

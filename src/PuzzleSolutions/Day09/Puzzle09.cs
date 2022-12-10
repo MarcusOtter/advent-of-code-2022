@@ -47,16 +47,15 @@ public class Puzzle09 : IPuzzleSolver
 
 	private static Position MoveTowardsHead(Position head, Position tail)
 	{
+		var xSign = Math.Sign(head.X - tail.X);
+		var ySign = Math.Sign(head.Y - tail.Y);
+		var x = tail.X + xSign;
+		var y = tail.Y + ySign;
+	
 		// Prefer diagonal moves
-		if (head.X > tail.X && head.Y > tail.Y) return new Position(tail.X + 1, tail.Y + 1);
-		if (head.X > tail.X && head.Y < tail.Y) return new Position(tail.X + 1, tail.Y - 1);
-		if (head.X < tail.X && head.Y > tail.Y) return new Position(tail.X - 1, tail.Y + 1);
-		if (head.X < tail.X && head.Y < tail.Y) return new Position(tail.X - 1, tail.Y - 1);
-		
-		if (head.X > tail.X) return tail with { X = tail.X + 1 };
-		if (head.X < tail.X) return tail with { X = tail.X - 1 };
-		if (head.Y > tail.Y) return tail with { Y = tail.Y + 1 };
-		if (head.Y < tail.Y) return tail with { Y = tail.Y - 1 };
+		if (xSign != 0 && ySign != 0) return new Position(x, y);
+		if (xSign != 0) return tail with { X = x };
+		if (ySign != 0) return tail with { Y = y };
 
 		return tail;
 	}

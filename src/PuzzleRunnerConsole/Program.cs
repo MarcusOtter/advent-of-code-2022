@@ -1,7 +1,7 @@
 ﻿using PuzzleSolutions;
 using Utilities;
 
-var puzzleDate = DateTime.Today;
+var puzzleDate = new DateTime(2022, 12, 11);
 var inputReader = new InputReader();
 
 var input = await inputReader.ReadLinesAsync(puzzleDate);

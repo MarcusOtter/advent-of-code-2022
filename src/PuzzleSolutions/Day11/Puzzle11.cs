@@ -11,14 +11,12 @@ public class Puzzle11 : IPuzzleSolver
 		
 		private readonly Func<long, long> _operation;
 		private readonly Func<long, int> _test;
-		private readonly long _divisor;
 		
-		public Monkey(List<long> items, Func<long, long> operation, Func<long, int> test, long divisor)
+		public Monkey(List<long> items, Func<long, long> operation, Func<long, int> test)
 		{
 			Items = items;
 			_operation = operation;
 			_test = test;
-			_divisor = divisor;
 		}
 
 		public (int monkeyIndex, long item)[] InspectItems(bool divideByThree)
@@ -27,66 +25,33 @@ public class Puzzle11 : IPuzzleSolver
 			for (var i = 0; i < Items.Count; i++)
 			{
 				Items[i] = _operation(Items[i]);
-				Items[i] /= divideByThree ? 3 : 1;
-				
-				// if (!divideByThree && Items[i] % _divisor == 0)
-				// {
-				// 	Items[i] /= _divisor;
-				// }
 
-				// I have no idea what I am doing and this does not work at all I think but idk
-				if (!divideByThree && Items[i] >= 130 && Items[i].ToString()[^1] == '0')
+				if (divideByThree)
 				{
-					Items[i] /= 10;
+					Items[i] /= 3;
 				}
+				else
+				{
+					Items[i] %= 9_699_690;
+				}
+				
+
 				outputs.Add((_test(Items[i]), Items[i]));
 				InspectionCount++;
 			}
+			
 			Items.Clear();
-
 			return outputs.ToArray();
 		}
 	}
 
 	public string SolveFirstPart(string[] input)
 	{
-		// return GetMonkeyBusiness(20, true, input).ToString();
-		return "";
+		return GetMonkeyBusiness(20, true, input).ToString();
 	}
 
 	public string SolveSecondPart(string[] input)
 	{
-		var demoInput = """
-		Monkey 0:
-		  Starting items: 79, 98
-		  Operation: new = old * 19
-		  Test: divisible by 23
-		    If true: throw to monkey 2
-		    If false: throw to monkey 3
-
-		Monkey 1:
-		  Starting items: 54, 65, 75, 74
-		  Operation: new = old + 6
-		  Test: divisible by 19
-		    If true: throw to monkey 2
-		    If false: throw to monkey 0
-
-		Monkey 2:
-		  Starting items: 79, 60, 97
-		  Operation: new = old * old
-		  Test: divisible by 13
-		    If true: throw to monkey 1
-		    If false: throw to monkey 3
-
-		Monkey 3:
-		  Starting items: 74
-		  Operation: new = old + 3
-		  Test: divisible by 17
-		    If true: throw to monkey 0
-		    If false: throw to monkey 1 
-		""";
-		input = demoInput.Split(Environment.NewLine);
-		
 		return GetMonkeyBusiness(10_000, false, input).ToString();
 	}
 
@@ -122,7 +87,7 @@ public class Puzzle11 : IPuzzleSolver
 			
 			var test = GetTest(divisible, input[++i], input[++i]);
 
-			monkeys.Add(new Monkey(startingItems, operation, test, long.Parse(divisible[20..])));
+			monkeys.Add(new Monkey(startingItems, operation, test));
 		}
 		return monkeys.ToArray();
 	}
